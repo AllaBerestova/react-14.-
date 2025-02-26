@@ -1,23 +1,19 @@
-import logo from './logo.svg';
+import React from 'react';
+import { useGetTodoList } from './hooks/useGetTodoList';
 import './App.css';
 
 function App() {
+  const completed = true
+  const {tasks, loading} = useGetTodoList(completed)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Выполненные задачи</h1>
+      {
+        loading && <div>Loading...</div>
+      }
+      {
+      !loading && tasks.map(task => <div key={task.id}>{task.title}</div>)
+      }
     </div>
   );
 }
