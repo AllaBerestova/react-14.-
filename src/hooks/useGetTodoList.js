@@ -8,13 +8,23 @@ export const useGetTodoList = (completed) => {
         try{
             setLoading(true)
             fetch('https://jsonplaceholder.typicode.com/todos')
-            .then(response => response.json())
+            .then(response => {
+                if(!response.ok){
+                    throw new Error('Ошибка при загрузке данных')
+                }
+                return response.json()
+            })
             .then(tasks => {
-                setTasks(tasks.filter(task => task.completed === completed))
+                if(completed === false){
+                    setTasks(tasks)
+                }else {
+                    setTasks(tasks.filter(task => task.completed === completed))
+                }
                 setLoading(false)
             })
         } catch (e) {
             console.log(e)
+        } finally{
             setLoading(false)
         }
         
