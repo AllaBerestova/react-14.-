@@ -9,17 +9,30 @@ function App() {
   const {setLocalStorage, getLocalStorage, removeLocalStorage} = useLocalStorage()
 
   const onGetData = () => {
+    if (!localStorageKey) {
+      console.warn('Ключ не указан');
+      return
+    }
     const data = getLocalStorage(localStorageKey)
     setData(data)
     console.log(`Данные получены из localStorage по ключу "${localStorageKey}":`, data)
+    
   }
 
   const onSetData = () => {
+    if(!localStorageKey || !localStorageValue){
+      console.warn('Ключ или значение не указаны');
+      return
+    }
     setLocalStorage(localStorageKey, localStorageValue)
     console.log(`Данные записаны в localStorage по ключу "${localStorageKey}":`, localStorageValue)
   }
 
   const onRemoveData = () => {
+    if(!localStorageKey){
+      console.warn('Ключ не указан')
+      return
+    }
     removeLocalStorage(localStorageKey)
     console.log(`Данные удалены из localStorage по ключу "${localStorageKey}"`)
   }
